@@ -128,3 +128,52 @@ match value:
 - Requires Python 3.10 or newer.
 - `case _:` acts as the default case.
 - Useful for matching complex patterns, not just values.
+
+
+## Loop Structures in Python
+
+Loops are used to execute a block of code repeatedly.
+
+### `for` Loop
+
+Iterates over a sequence (like list, tuple, string, or range):
+
+```python
+for i in range(5):
+    print(i)  # Prints 0 to 4
+
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+```
+
+### `while` Loop
+
+Repeats as long as a condition is `True`:
+
+```python
+count = 0
+while count < 3:
+    print(count)
+    count += 1
+```
+
+### Loop Control Statements
+
+- `break`: Exit the loop immediately.
+- `continue`: Skip the rest of the current iteration.
+- `else`: Optional; runs if the loop wasn't terminated by `break`.
+
+**Example:**
+```python
+for n in range(5):
+    if n == 3:
+        break
+    print(n)
+else:
+    print("Completed without break")  # Not printed if break occurs
+```
+
+- Loops can be nested.
+- Indentation defines the loop body.
+- Useful for iterating, searching, and processing data.
