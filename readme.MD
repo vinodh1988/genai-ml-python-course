@@ -219,3 +219,78 @@ for i in range(3):
 - Use structured control flow (`if`, `for`, `while`, functions) instead.
 
 > Using `break` and `continue` helps manage loop execution without the need for `goto`.
+
+## Python Modules and User-Defined Module Creation
+
+### What is a Module?
+
+A module is a file containing Python code (functions, classes, variables). Modules help organize code into reusable components.
+
+**Types of Modules:**
+- Built-in modules: `os`, `sys`, `math`, `json`, etc.
+- User-defined modules: Custom `.py` files you create.
+- Packages: Directories containing modules and an `__init__.py` file.
+
+### Creating a User-Defined Module
+
+Create a `.py` file with your code:
+
+```python
+# mymodule.py
+def greet(name):
+    return f"Hello, {name}!"
+
+PI = 3.14159
+```
+
+Import and use it:
+
+```python
+import mymodule
+print(mymodule.greet("Alice"))  # Hello, Alice!
+print(mymodule.PI)              # 3.14159
+```
+
+### Understanding `.pyc` Files
+
+- **`.pyc` files** are compiled Python bytecode generated automatically by Python.
+- Located in the `__pycache__` directory within your project.
+- Created when a module is first imported to speed up subsequent imports.
+- Safe to delete; Python regenerates them automatically when needed.
+- Not human-readable; computer-optimized for faster execution.
+
+### Understanding `__init__.py`
+
+- **`__init__.py`** marks a directory as a Python package.
+- Can be empty or contain initialization code for the package.
+- Runs when the package is imported.
+- Allows organizing multiple modules in a directory.
+
+**Example Package Structure:**
+```
+mypackage/
+├── __init__.py
+├── module1.py
+├── module2.py
+└── __pycache__/
+    ├── __init__.cpython-39.pyc
+    ├── module1.cpython-39.pyc
+    └── module2.cpython-39.pyc
+```
+
+**`__init__.py` Example:**
+```python
+# mypackage/__init__.py
+print("Initializing mypackage")
+
+from .module1 import function1
+from .module2 import function2
+```
+
+Import the package:
+```python
+import mypackage  # Prints: Initializing mypackage
+mypackage.function1()
+```
+
+> **Note:** In Python 3.3+, `__init__.py` is optional for namespace packages, but recommended for clarity.
