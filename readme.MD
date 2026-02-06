@@ -177,3 +177,45 @@ else:
 - Loops can be nested.
 - Indentation defines the loop body.
 - Useful for iterating, searching, and processing data.
+
+## Jump Statements in Python
+
+Jump statements alter the normal flow of control in loops and other code blocks.
+
+### `break`
+
+- Exits the nearest enclosing loop immediately.
+
+```python
+for i in range(5):
+    if i == 3:
+        break
+    print(i)  # Prints 0, 1, 2
+```
+
+### `continue`
+
+- Skips the rest of the current loop iteration and moves to the next iteration.
+
+```python
+for i in range(5):
+    if i == 2:
+        continue
+    print(i)  # Prints 0, 1, 3, 4
+```
+
+### `pass`
+
+- Does nothing; acts as a placeholder where code is syntactically required.
+
+```python
+for i in range(3):
+    pass  # No action taken
+```
+
+### `goto`
+
+- Python does **not** support a `goto` statement.
+- Use structured control flow (`if`, `for`, `while`, functions) instead.
+
+> Using `break` and `continue` helps manage loop execution without the need for `goto`.
