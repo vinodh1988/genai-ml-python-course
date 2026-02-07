@@ -642,3 +642,104 @@ def add(a: int, b: int) -> int:
 
 print(add.__annotations__)  # {'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
 ```
+## Exceptions in Python
+
+Exceptions are errors that occur during program execution. Python handles exceptions using `try`, `except`, `else`, and `finally` blocks.
+
+### Exception Handling Syntax
+
+```python
+try:
+    # Code that might raise an exception
+    result = 10 / 0
+except ZeroDivisionError:
+    # Handle specific exception
+    print("Cannot divide by zero")
+except ValueError:
+    # Handle another exception
+    print("Invalid value")
+except Exception as e:
+    # Catch any other exception
+    print(f"Error: {e}")
+else:
+    # Runs if no exception occurred
+    print("Division successful")
+finally:
+    # Always executes, regardless of exception
+    print("Operation complete")
+```
+
+### Common Built-in Exceptions
+
+| Exception | Cause | Example |
+|-----------|-------|---------|
+| `ZeroDivisionError` | Division by zero | `10 / 0` |
+| `ValueError` | Wrong value type | `int("abc")` |
+| `TypeError` | Wrong data type | `"text" + 5` |
+| `IndexError` | Index out of range | `lst[10]` (list has 5 items) |
+| `KeyError` | Dictionary key not found | `dict["missing_key"]` |
+| `AttributeError` | Attribute doesn't exist | `obj.missing_attr` |
+| `NameError` | Variable not defined | `print(undefined_var)` |
+| `FileNotFoundError` | File doesn't exist | `open("missing.txt")` |
+| `ImportError` | Module not found | `import missing_module` |
+| `RuntimeError` | General runtime error | User-defined runtime issues |
+| `RecursionError` | Too much recursion | Infinite recursive calls |
+| `StopIteration` | Iterator exhausted | Raised when `next()` has no more items |
+
+### Raising Custom Exceptions
+
+```python
+def validate_age(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative")
+    return age
+
+try:
+    validate_age(-5)
+except ValueError as e:
+    print(f"Caught error: {e}")
+```
+
+### Creating Custom Exception Classes
+
+```python
+class CustomError(Exception):
+    def __init__(self, message):
+        self.message = message
+    
+    def __str__(self):
+        return f"CustomError: {self.message}"
+
+try:
+    raise CustomError("Something went wrong")
+except CustomError as e:
+    print(e)
+```
+
+### Exception Hierarchy
+
+Python exceptions follow a hierarchy:
+```
+BaseException
+├── SystemExit
+├── KeyboardInterrupt
+└── Exception
+    ├── StopIteration
+    ├── GeneratorExit
+    ├── ArithmeticError (ZeroDivisionError, OverflowError)
+    ├── LookupError (IndexError, KeyError)
+    ├── NameError
+    ├── TypeError
+    ├── ValueError
+    ├── RuntimeError
+    ├── OSError (FileNotFoundError, etc.)
+    └── ... (many others)
+```
+
+### Best Practices
+
+- Catch specific exceptions before general ones
+- Avoid bare `except:` clauses; always specify exception type
+- Use `finally` for cleanup operations (closing files, releasing resources)
+- Provide meaningful error messages
+- Don't suppress exceptions silently without good reason
