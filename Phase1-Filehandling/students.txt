@@ -1,0 +1,8 @@
+SNO       Name                City           
+---------------------------------------------
+1         Johan               Chennai        
+2         Peter               Chennai        
+3         Vikas               Mumbai         
+4         Prathap             Mumbai         
+5         Shree               Chennai        
+6         Lokesh              Mumbai         

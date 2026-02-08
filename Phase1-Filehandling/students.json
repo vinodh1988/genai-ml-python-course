@@ -1,0 +1,24 @@
+{
+    "students": [
+        {"id": 1, "name": "Alice Johnson", "email": "alice@school.edu", "grade": "A", "gpa": 3.9},
+        {"id": 2, "name": "Bob Smith", "email": "bob@school.edu", "grade": "B", "gpa": 3.5},
+        {"id": 3, "name": "Carol White", "email": "carol@school.edu", "grade": "A", "gpa": 3.8},
+        {"id": 4, "name": "David Brown", "email": "david@school.edu", "grade": "B", "gpa": 3.4},
+        {"id": 5, "name": "Emma Davis", "email": "emma@school.edu", "grade": "A", "gpa": 3.95},
+        {"id": 6, "name": "Frank Miller", "email": "frank@school.edu", "grade": "C", "gpa": 3.1},
+        {"id": 7, "name": "Grace Lee", "email": "grace@school.edu", "grade": "A", "gpa": 3.92},
+        {"id": 8, "name": "Henry Wilson", "email": "henry@school.edu", "grade": "B", "gpa": 3.6},
+        {"id": 9, "name": "Iris Martinez", "email": "iris@school.edu", "grade": "A", "gpa": 3.87},
+        {"id": 10, "name": "Jack Taylor", "email": "jack@school.edu", "grade": "B", "gpa": 3.3},
+        {"id": 11, "name": "Kelly Anderson", "email": "kelly@school.edu", "grade": "A", "gpa": 3.85},
+        {"id": 12, "name": "Leo Thomas", "email": "leo@school.edu", "grade": "C", "gpa": 3.2},
+        {"id": 13, "name": "Mia Jackson", "email": "mia@school.edu", "grade": "A", "gpa": 3.88},
+        {"id": 14, "name": "Noah Harris", "email": "noah@school.edu", "grade": "B", "gpa": 3.45},
+        {"id": 15, "name": "Olivia Clark", "email": "olivia@school.edu", "grade": "A", "gpa": 3.91},
+        {"id": 16, "name": "Paulo Rodriguez", "email": "paulo@school.edu", "grade": "B", "gpa": 3.55},
+        {"id": 17, "name": "Quinn Lewis", "email": "quinn@school.edu", "grade": "A", "gpa": 3.86},
+        {"id": 18, "name": "Rachel Walker", "email": "rachel@school.edu", "grade": "C", "gpa": 3.0},
+        {"id": 19, "name": "Sam Hall", "email": "sam@school.edu", "grade": "B", "gpa": 3.7},
+        {"id": 20, "name": "Tina Allen", "email": "tina@school.edu", "grade": "A", "gpa": 3.93}
+    ]
+}

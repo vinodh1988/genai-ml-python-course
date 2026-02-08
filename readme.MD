@@ -743,3 +743,502 @@ BaseException
 - Use `finally` for cleanup operations (closing files, releasing resources)
 - Provide meaningful error messages
 - Don't suppress exceptions silently without good reason
+
+
+## File Handling in Python
+
+File handling involves reading, writing, and manipulating files. Python provides built-in functions and modules for efficient file operations.
+
+### Opening and Closing Files
+
+```python
+# Basic file opening
+file = open("filename.txt", "r")
+content = file.read()
+file.close()
+
+# Using context manager (recommended)
+with open("filename.txt", "r") as file:
+    content = file.read()
+# File automatically closes
+```
+
+### File Modes
+
+| Mode | Purpose |
+|------|---------|
+| `"r"` | Read (default); file must exist |
+| `"w"` | Write; creates new file or overwrites existing |
+| `"a"` | Append; adds content to end of file |
+| `"x"` | Create; fails if file already exists |
+| `"b"` | Binary mode; can be combined with others (`"rb"`, `"wb"`) |
+| `"t"` | Text mode (default); can be combined with others |
+| `"+"` | Read and write; can be combined (`"r+"`, `"w+"`) |
+
+### Reading Files
+
+```python
+# Read entire file
+with open("file.txt", "r") as file:
+    content = file.read()
+
+# Read line by line
+with open("file.txt", "r") as file:
+    for line in file:
+        print(line.strip())
+
+# Read all lines as list
+with open("file.txt", "r") as file:
+    lines = file.readlines()
+
+# Read single line
+with open("file.txt", "r") as file:
+    first_line = file.readline()
+```
+
+### Writing Files
+
+```python
+# Write to file
+with open("file.txt", "w") as file:
+    file.write("Hello, World!\n")
+    file.write("Second line\n")
+
+# Write multiple lines
+with open("file.txt", "w") as file:
+    lines = ["Line 1\n", "Line 2\n", "Line 3\n"]
+    file.writelines(lines)
+
+# Append to file
+with open("file.txt", "a") as file:
+    file.write("Appended line\n")
+```
+
+### Working with JSON Files
+
+JSON (JavaScript Object Notation) is a lightweight data format for storing and exchanging structured data.
+
+```python
+import json
+
+# Write to JSON file
+data = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York",
+    "hobbies": ["reading", "coding"]
+}
+
+with open("data.json", "w") as file:
+    json.dump(data, file, indent=4)
+
+# Read from JSON file
+with open("data.json", "r") as file:
+    loaded_data = json.load(file)
+    print(loaded_data["name"])  # Alice
+
+# Convert string to JSON object
+json_string = '{"name": "Bob", "age": 25}'
+parsed_data = json.loads(json_string)
+
+# Convert Python object to JSON string
+json_output = json.dumps(data, indent=2)
+print(json_output)
+```
+
+### Working with CSV Files
+
+CSV (Comma-Separated Values) stores tabular data. Use the `csv` module for safe parsing.
+
+```python
+import csv
+
+# Write to CSV file
+data = [
+    ["Name", "Age", "City"],
+    ["Alice", 30, "New York"],
+    ["Bob", 25, "Los Angeles"],
+    ["Charlie", 35, "Chicago"]
+]
+
+with open("data.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
+
+# Read from CSV file
+with open("data.csv", "r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+
+# Read as dictionaries (with headers)
+with open("data.csv", "r") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(row["Name"], row["Age"])
+
+# Write dictionaries to CSV
+records = [
+    {"Name": "Alice", "Age": 30, "City": "New York"},
+    {"Name": "Bob", "Age": 25, "City": "Los Angeles"}
+]
+
+with open("data.csv", "w", newline="") as file:
+    fieldnames = ["Name", "Age", "City"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(records)
+```
+
+### File Operations
+
+```python
+import os
+
+# Check if file exists
+if os.path.exists("file.txt"):
+    print("File exists")
+
+# Get file size
+size = os.path.getsize("file.txt")
+print(f"File size: {size} bytes")
+
+# Rename file
+os.rename("old_name.txt", "new_name.txt")
+
+# Delete file
+os.remove("file.txt")
+
+# Get current working directory
+cwd = os.getcwd()
+
+# List files in directory
+files = os.listdir(".")
+
+# Create directory
+os.makedirs("new_folder", exist_ok=True)
+```
+
+### Best Practices
+
+- Always use context managers (`with` statement) to ensure files close properly
+- Handle exceptions when reading/writing files
+- Use `newline=""` parameter when writing CSV files to avoid extra blank lines
+- Use `json.dumps()` and `json.loads()` for string conversion
+- Use `csv.DictReader` and `csv.DictWriter` for structured data
+- Specify encoding explicitly when needed: `open("file.txt", "r", encoding="utf-8")`
+## Pickling in Python
+
+Pickling is the process of converting Python objects into byte streams (serialization). Unpickling reverses this process, reconstructing objects from byte streams. The `pickle` module enables object serialization for storage or transmission.
+
+### Basic Pickling and Unpickling
+
+```python
+import pickle
+
+# Create an object
+data = {"name": "Alice", "age": 30, "items": [1, 2, 3]}
+
+# Pickle to bytes
+pickled_data = pickle.dumps(data)
+print(pickled_data)  # Binary representation
+
+# Unpickle from bytes
+unpickled_data = pickle.loads(pickled_data)
+print(unpickled_data)  # {"name": "Alice", "age": 30, "items": [1, 2, 3]}
+```
+
+### Pickling to Files
+
+```python
+import pickle
+
+# Write object to file
+with open("data.pkl", "wb") as file:
+    pickle.dump(data, file)
+
+# Read object from file
+with open("data.pkl", "rb") as file:
+    loaded_data = pickle.load(file)
+    print(loaded_data)
+```
+
+### Pickling Custom Objects
+
+```python
+import pickle
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def __repr__(self):
+        return f"Person(name={self.name}, age={self.age})"
+
+# Pickle custom object
+person = Person("Bob", 25)
+pickled = pickle.dumps(person)
+
+# Unpickle custom object
+unpickled_person = pickle.loads(pickled)
+print(unpickled_person)  # Person(name=Bob, age=25)
+```
+
+### Pickle Protocols
+
+Different pickle protocols offer varying levels of compatibility and efficiency:
+
+| Protocol | Version | Features |
+|----------|---------|----------|
+| 0 | Human-readable ASCII | Slow; compatible with all Python versions |
+| 1 | Legacy binary | Binary format; Python 1.5+ |
+| 2 | Efficient binary | Optimized for Python 2.3+ |
+| 3 | Binary | Python 3.0+; default in Python 3 |
+| 4 | Binary | Python 3.4+; handles large objects efficiently |
+| 5 | Binary | Python 3.8+; supports out-of-band data |
+
+```python
+# Specify protocol
+pickled = pickle.dumps(data, protocol=4)
+
+# Default protocol (highest available)
+pickled = pickle.dumps(data)
+```
+
+### Pickle vs JSON
+
+| Aspect | Pickle | JSON |
+|--------|--------|------|
+| Format | Binary | Text |
+| Security | Unsafe; code execution risk | Safe |
+| Language Support | Python only | All languages |
+| Object Types | Most Python objects | Basic types (dict, list, str, int) |
+| Human Readable | No | Yes |
+| Use Case | Python-to-Python serialization | Data interchange |
+
+### Security Considerations
+
+⚠️ **Warning:** Never unpickle untrusted data. Pickling can execute arbitrary code during unpickle operations.
+
+```python
+# Safe approach: validate source before unpickling
+import pickle
+
+# Only unpickle data from trusted sources
+with open("trusted_data.pkl", "rb") as file:
+    data = pickle.load(file)
+```
+
+### Best Practices
+
+- Use `pickle` for internal Python serialization only
+- Use `json` for data interchange or untrusted sources
+- Always use binary mode (`"wb"`, `"rb"`) when pickling to/from files
+- Specify protocol version for compatibility across Python versions
+- Consider custom `__getstate__()` and `__setstate__()` for complex objects
+- Don't pickle sensitive data (passwords, keys); use secure methods instead
+
+## Database Connectivity with MySQL in Python
+
+### Installing MySQL Connector
+
+```python
+# Install using pip
+pip install mysql-connector-python
+```
+
+### Basic Connection to MySQL
+
+```python
+import mysql.connector
+
+# Establish connection
+connection = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="your_password",
+    database="your_database"
+)
+
+# Create cursor
+cursor = connection.cursor()
+
+# Close connection
+cursor.close()
+connection.close()
+```
+
+### Executing Queries
+
+```python
+import mysql.connector
+
+connection = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="mydb"
+)
+
+cursor = connection.cursor()
+
+# CREATE table
+create_table = """
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255)
+)
+"""
+cursor.execute(create_table)
+
+# INSERT data
+insert_query = "INSERT INTO users (name, email) VALUES (%s, %s)"
+data = ("Alice", "alice@example.com")
+cursor.execute(insert_query, data)
+connection.commit()
+
+# SELECT data
+select_query = "SELECT * FROM users"
+cursor.execute(select_query)
+results = cursor.fetchall()
+for row in results:
+    print(row)
+
+# UPDATE data
+update_query = "UPDATE users SET email = %s WHERE name = %s"
+cursor.execute(update_query, ("newemail@example.com", "Alice"))
+connection.commit()
+
+# DELETE data
+delete_query = "DELETE FROM users WHERE name = %s"
+cursor.execute(delete_query, ("Alice",))
+connection.commit()
+
+cursor.close()
+connection.close()
+```
+
+### Using Context Manager (Recommended)
+
+```python
+import mysql.connector
+
+try:
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="password",
+        database="mydb"
+    )
+    
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    results = cursor.fetchall()
+    
+    for row in results:
+        print(row)
+    
+finally:
+    cursor.close()
+    connection.close()
+```
+
+### Fetching Results
+
+```python
+cursor.execute("SELECT * FROM users")
+
+# Fetch one row
+one_row = cursor.fetchone()
+
+# Fetch all rows
+all_rows = cursor.fetchall()
+
+# Fetch specific number of rows
+few_rows = cursor.fetchmany(5)
+
+# Get column names
+cursor.execute("SELECT * FROM users")
+column_names = [desc[0] for desc in cursor.description]
+```
+
+### Parameterized Queries (Prevent SQL Injection)
+
+```python
+# Safe: using parameterized queries
+query = "SELECT * FROM users WHERE name = %s"
+cursor.execute(query, ("Alice",))
+
+# Unsafe: string concatenation
+# query = f"SELECT * FROM users WHERE name = '{name}'"  # Avoid!
+```
+
+### Batch Insert
+
+```python
+data = [
+    ("Alice", "alice@example.com"),
+    ("Bob", "bob@example.com"),
+    ("Charlie", "charlie@example.com")
+]
+
+query = "INSERT INTO users (name, email) VALUES (%s, %s)"
+cursor.executemany(query, data)
+connection.commit()
+```
+
+### Error Handling
+
+```python
+import mysql.connector
+from mysql.connector import Error
+
+try:
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="password",
+        database="mydb"
+    )
+    
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    results = cursor.fetchall()
+    
+except Error as e:
+    print(f"Error: {e}")
+    
+finally:
+    if cursor:
+        cursor.close()
+    if connection.is_connected():
+        connection.close()
+```
+
+### Connection Pooling
+
+```python
+from mysql.connector import pooling
+
+# Create connection pool
+connection_pool = pooling.MySQLConnectionPool(
+    pool_name="mypool",
+    pool_size=5,
+    host="localhost",
+    user="root",
+    password="password",
+    database="mydb"
+)
+
+# Get connection from pool
+connection = connection_pool.get_connection()
+cursor = connection.cursor()
+
+cursor.execute("SELECT * FROM users")
+results = cursor.fetchall()
+
+cursor.close()
+connection.close()
+```
